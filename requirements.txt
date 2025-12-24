@@ -2,7 +2,7 @@ streamlit
 tensorflow>=2.20.0
 tf-keras
 deepface==0.0.96
-opencv-python-headless==4.12.0.88
+opencv-python-headless
 numpy
 scikit-learn
 pillow
@@ -10,3 +10,4 @@ tqdm
 mtcnn
 retina-face
 gdown
+
