@@ -74,6 +74,7 @@ def extract_embedding_from_pil(pil_img):
     )[0]["embedding"]
 
     return np.array(embedding).reshape(1, -1)
+    
 ACTORS_ZIP = "Actors.zip"
 ACTORS_DIR = "Actors"
 ACTORS_URL = "https://drive.google.com/uc?id=1PNmNQ4cQ1_kn6p-9XXdVBZba_wRDVj77"
@@ -91,6 +92,15 @@ def prepare_actor_images():
         os.remove(ACTORS_ZIP)
 
 prepare_actor_images()
+
+def load_actor_image(actor_dir):
+    try:
+        for file in os.listdir(actor_dir):
+            if file.lower().endswith((".jpg", ".jpeg", ".png")):
+                return Image.open(os.path.join(actor_dir, file))
+    except Exception:
+        pass
+    return None
 
 
 if uploaded_image is not None:
@@ -135,6 +145,7 @@ if uploaded_image is not None:
     match_percent = int(best_score * 100)
     st.progress(match_percent)
     st.markdown(f"### {match_percent}% similarity")
+
 
 
 
