@@ -105,12 +105,18 @@ if uploaded_image is not None:
     with col2:
         st.subheader("Matched Identity")
 
-        matched_name = os.path.splitext(os.path.basename(filenames[best_index]))[0]
-        matched_name = re.split(r"[._]\d+$", matched_name)[0]
+        file_name = os.path.basename(filenames[best_index])
+        
+        name_no_ext = os.path.splitext(file_name)[0]
+        
+        clean_name = re.split(r"[._]\d+$", name_no_ext)[0]
+        
+        display_name = clean_name.replace("_", " ")
 
         st.image(matched_img, width=250)
-        st.markdown(f"###  {matched_name}")
+        st.markdown(f"### {display_name}")
 
+    
     st.markdown("---")
     st.subheader("🔎 Match Confidence")
 
@@ -118,6 +124,7 @@ if uploaded_image is not None:
 
     st.progress(match_percent)
     st.markdown(f"### {match_percent}% similarity")
+
 
 
 
