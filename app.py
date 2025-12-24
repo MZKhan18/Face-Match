@@ -109,26 +109,25 @@ if uploaded_image is not None:
     matched_image_path = filenames[best_index]
 
     with col2:
-    st.subheader("Matched Identity")
+        st.subheader("Matched Identity")
 
-    matched_image_path = filenames[best_index]
+        matched_image_path = filenames[best_index]
 
-    # Get actor directory and name
-    actor_dir = os.path.dirname(matched_image_path)
-    actor_name = os.path.basename(actor_dir)
+        # Get actor directory and name
+        actor_dir = os.path.dirname(matched_image_path)
+        actor_name = os.path.basename(actor_dir)
 
-    st.markdown(f"###  {actor_name}")
+        st.markdown(f"###  {actor_name}")
 
-    if os.path.exists(actor_dir):
-        actor_img = load_actor_image(actor_dir)
+        if os.path.exists(actor_dir):
+            actor_img = load_actor_image(actor_dir)
 
-        if actor_img is not None:
-            st.image(actor_img, width=250)
+            if actor_img is not None:
+                st.image(actor_img, width=250)
+            else:
+                st.warning("⚠️ No image found in actor folder.")
         else:
-            st.warning("⚠️ No image found in actor folder.")
-    else:
-        st.warning("⚠️ Actor folder not found.")
-
+            st.warning("⚠️ Actor folder not found.")
 
     st.markdown("---")
     st.subheader("🔎 Match Confidence")
@@ -136,6 +135,7 @@ if uploaded_image is not None:
     match_percent = int(best_score * 100)
     st.progress(match_percent)
     st.markdown(f"### {match_percent}% similarity")
+
 
 
 
