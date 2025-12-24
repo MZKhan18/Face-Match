@@ -9,3 +9,6 @@ tqdm
 mtcnn
 retina-face
 gdown
+opencv-python-headless
+
+
