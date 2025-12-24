@@ -112,9 +112,9 @@ if uploaded_image is not None:
         clean_name = re.split(r"[._]\d+$", name_no_ext)[0]
         
         display_name = clean_name.replace("_", " ")
-
+        final_name = display_name.split("\")[1]
         st.image(matched_img, width=250)
-        st.markdown(f"### {display_name}")
+        st.markdown(f"### {final_name}")
 
     
     st.markdown("---")
@@ -124,6 +124,7 @@ if uploaded_image is not None:
 
     st.progress(match_percent)
     st.markdown(f"### {match_percent}% similarity")
+
 
 
 
