@@ -111,16 +111,23 @@ if uploaded_image is not None:
     with col2:
         st.subheader("Matched Identity")
 
-        matched_name = os.path.splitext(os.path.basename(matched_image_path))[0]
-        matched_name = re.split(r"[._]\d+$", matched_name)[0]
+        matched_image_path = filenames[best_index]
 
-        if os.path.exists(matched_image_path):
-            matched_img = Image.open(matched_image_path)
-            st.image(matched_img, width=250)
+        # Get actor directory and name
+        actor_dir = os.path.dirname(matched_image_path)
+        actor_name = os.path.basename(actor_dir)
+
+        st.markdown(f"###  {actor_name}")
+
+        if os.path.exists(actor_dir):
+            actor_img = load_actor_image(actor_dir)
+
+            if actor_img is not None:
+                st.image(actor_img, width=250)
+            else:
+                st.warning("⚠️ No image found in actor folder.")
         else:
-            st.warning("⚠️ Matched reference image not found.")
-
-        st.markdown(f"###  {matched_name}")
+            st.warning("⚠️ Actor folder not found.")
 
     st.markdown("---")
     st.subheader("🔎 Match Confidence")
