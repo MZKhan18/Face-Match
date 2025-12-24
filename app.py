@@ -74,6 +74,23 @@ def extract_embedding_from_pil(pil_img):
     )[0]["embedding"]
 
     return np.array(embedding).reshape(1, -1)
+ACTORS_ZIP = "Actors.zip"
+ACTORS_DIR = "Actors"
+ACTORS_URL = "https://drive.google.com/uc?id=1PNmNQ4cQ1_kn6p-9XXdVBZba_wRDVj77"
+
+@st.cache_resource
+def prepare_actor_images():
+    if not os.path.exists(ACTORS_DIR):
+        with st.spinner("Downloading reference face database..."):
+            gdown.download(ACTORS_URL, ACTORS_ZIP, quiet=False)
+
+        import zipfile
+        with zipfile.ZipFile(ACTORS_ZIP, "r") as zip_ref:
+            zip_ref.extractall()
+
+        os.remove(ACTORS_ZIP)
+
+prepare_actor_images()
 
 
 if uploaded_image is not None:
@@ -89,24 +106,29 @@ if uploaded_image is not None:
         query_embedding = extract_embedding_from_pil(display_img)
         best_index, best_score = find_best_match(query_embedding, feature_list)
 
-    matched_img = Image.open(filenames[best_index])
+    matched_image_path = filenames[best_index]
 
     with col2:
         st.subheader("Matched Identity")
 
-        matched_name = os.path.splitext(os.path.basename(filenames[best_index]))[0]
+        matched_name = os.path.splitext(os.path.basename(matched_image_path))[0]
         matched_name = re.split(r"[._]\d+$", matched_name)[0]
 
-        st.image(matched_img, width=250)
+        if os.path.exists(matched_image_path):
+            matched_img = Image.open(matched_image_path)
+            st.image(matched_img, width=250)
+        else:
+            st.warning("⚠️ Matched reference image not found.")
+
         st.markdown(f"###  {matched_name}")
 
     st.markdown("---")
     st.subheader("🔎 Match Confidence")
 
     match_percent = int(best_score * 100)
-
     st.progress(match_percent)
     st.markdown(f"### {match_percent}% similarity")
+
 
 
 
