@@ -120,11 +120,9 @@ if uploaded_image is not None:
 
     matched_path = filenames[best_index]
 
-    # Actor directory & name
-    actor_name = os.path.basename(os.path.dirname(matched_path))
-    actor_dir = os.path.join("Actors", actor_name)
-    # actor_dir = os.path.dirname(matched_path)
-    # actor_name = os.path.basename(actor_dir)
+# Actor directory & name
+    actor_dir = os.path.dirname(matched_path)
+    actor_name = os.path.basename(actor_dir)
 
     with col2:
         st.subheader("Matched Identity")
