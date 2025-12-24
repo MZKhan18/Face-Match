@@ -3,12 +3,9 @@ tensorflow>=2.20.0
 tf-keras
 deepface==0.0.96
 numpy
-opencv-python-headless
 scikit-learn
 pillow
 tqdm
 mtcnn
 retina-face
 gdown
-
-
