@@ -90,8 +90,13 @@ if uploaded_image is not None:
         best_index, best_score = find_best_match(query_embedding, feature_list)
 
 
+    raw_path = filenames[best_index]
 
-    matched_img = Image.open(filenames[best_index])
+    image_filename = os.path.basename(raw_path)
+
+    final_path = os.path.join("actors", image_filename)
+
+    matched_img = Image.open(final_path)
 
     with col2:
         st.subheader("Matched Identity")
@@ -109,5 +114,6 @@ if uploaded_image is not None:
 
     st.progress(match_percent)
     st.markdown(f"### {match_percent}% similarity")
+
 
 
