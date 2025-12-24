@@ -92,12 +92,16 @@ if uploaded_image is not None:
 
     raw_path = filenames[best_index]
 
-    image_filename = os.path.basename(raw_path)
+    clean_path = raw_path.replace("\\", "/")
 
-    final_path = os.path.join("actors", image_filename)
+    if "actors/" in clean_path.lower():
+        final_path = clean_path.split("actors/")[-1]
+        final_path = os.path.join("actors", final_path)
+    else:
+        final_path = clean_path
 
     matched_img = Image.open(final_path)
-
+    
     with col2:
         st.subheader("Matched Identity")
 
@@ -114,6 +118,7 @@ if uploaded_image is not None:
 
     st.progress(match_percent)
     st.markdown(f"### {match_percent}% similarity")
+
 
 
 
