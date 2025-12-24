@@ -3,7 +3,6 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import re
 import pickle
 import numpy as np
-import cv2
 import gzip
 import gdown
 import streamlit as st
@@ -90,11 +89,7 @@ if uploaded_image is not None:
         query_embedding = extract_embedding_from_pil(display_img)
         best_index, best_score = find_best_match(query_embedding, feature_list)
 
-    matched_img = cv2.imread(filenames[best_index])
-    matched_img = cv2.cvtColor(matched_img, cv2.COLOR_BGR2RGB)
-
-
-
+    matched_img = Image.open(filenames[best_index])
 
     with col2:
         st.subheader("Matched Identity")
