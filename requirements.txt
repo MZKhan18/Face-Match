@@ -10,4 +10,3 @@ tqdm
 mtcnn
 retina-face
 gdown
-
