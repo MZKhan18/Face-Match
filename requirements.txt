@@ -9,4 +9,5 @@ pillow
 tqdm
 mtcnn
 retina-face
-gdwon
+gdown
+
