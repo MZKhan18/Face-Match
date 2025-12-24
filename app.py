@@ -30,33 +30,6 @@ if not os.path.exists(EMBEDDING_FILE):
         gdown.download(EMBEDDING_URL, EMBEDDING_FILE, quiet=False)
 
 
-ACTORS_DIR = "Actors"
-ACTORS_ZIP = "Actors.zip"
-ACTORS_URL = "https://drive.google.com/uc?id=1PNmNQ4cQ1_kn6p-9XXdVBZba_wRDVj77"
-
-@st.cache_resource
-def prepare_actor_images():
-    if not os.path.exists(ACTORS_DIR):
-        with st.spinner("Downloading reference image database..."):
-            gdown.download(ACTORS_URL, ACTORS_ZIP, quiet=False)
-
-        import zipfile
-        with zipfile.ZipFile(ACTORS_ZIP, "r") as zip_ref:
-            zip_ref.extractall()
-
-        os.remove(ACTORS_ZIP)
-
-prepare_actor_images()
-
-def load_actor_image(actor_dir):
-    try:
-        for file in os.listdir(actor_dir):
-            if file.lower().endswith((".jpg", ".jpeg", ".png")):
-                return Image.open(os.path.join(actor_dir, file))
-    except Exception:
-        pass
-    return None
-
 
 @st.cache_resource
 def load_resources():
@@ -118,25 +91,17 @@ if uploaded_image is not None:
 
 
 
-    matched_path = filenames[best_index]
-
-# Actor directory & name
-    actor_dir = os.path.dirname(matched_path)
-    actor_name = os.path.basename(actor_dir)
+    matched_img = Image.open(filenames[best_index])
 
     with col2:
         st.subheader("Matched Identity")
-        st.markdown(f"### 🧑 {actor_name}")
 
-        if os.path.exists(actor_dir):
-            actor_img = load_actor_image(actor_dir)
-            if actor_img is not None:
-                st.image(actor_img, width=250)
-            else:
-                st.warning("⚠️ No image found in actor folder.")
-        else:
-            st.warning("⚠️ Actor folder not found.")
-            
+        matched_name = os.path.splitext(os.path.basename(filenames[best_index]))[0]
+        matched_name = re.split(r"[._]\d+$", matched_name)[0]
+
+        st.image(matched_img, width=250)
+        st.markdown(f"###  {matched_name}")
+
     st.markdown("---")
     st.subheader("🔎 Match Confidence")
 
@@ -144,8 +109,6 @@ if uploaded_image is not None:
 
     st.progress(match_percent)
     st.markdown(f"### {match_percent}% similarity")
-
-
 
 
 
