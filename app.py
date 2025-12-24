@@ -111,4 +111,3 @@ if uploaded_image is not None:
     st.markdown(f"### {match_percent}% similarity")
 
 
-
