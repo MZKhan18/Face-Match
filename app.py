@@ -94,7 +94,7 @@ if uploaded_image is not None:
 
     image_filename = os.path.basename(raw_path)
 
-    final_path = os.path.join("actors", image_filename)
+    final_path = os.path.join("Actors", image_filename)
 
     matched_img = Image.open(final_path)
 
@@ -114,6 +114,7 @@ if uploaded_image is not None:
 
     st.progress(match_percent)
     st.markdown(f"### {match_percent}% similarity")
+
 
 
 
