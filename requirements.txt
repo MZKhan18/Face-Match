@@ -3,6 +3,7 @@ tensorflow>=2.20.0
 tf-keras
 deepface==0.0.96
 opencv-python-headless
+opencv-python==0.0.0
 numpy
 scikit-learn
 pillow
